@@ -1,4 +1,5 @@
 import { BookOpen, Crown, Landmark, Sword } from 'lucide-react';
+import { youtube_link } from '../utils/constants';
 
 const HistorySection = () => {
   const periods = [
@@ -69,7 +70,7 @@ const HistorySection = () => {
               de la historia española. ¡Suscríbete para no perderte ningún contenido!
             </p>
             <a
-              href="https://youtube.com"
+              href={youtube_link}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 bg-[#ff5722] hover:bg-[#ff6b3d] text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"

@@ -2,6 +2,45 @@ import { useState, useEffect } from 'react';
 import { X, ExternalLink, BookOpen } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+const mockCourses = [
+  {
+    id: 1,
+    title: "Historia de la España Medieval",
+    short_description: "Un recorrido completo por la Edad Media española",
+    image: "/medieval-spain-castle.jpg",
+    full_description:
+      "Sumérgete en la fascinante historia de la España Medieval, desde la invasión musulmana hasta los Reyes Católicos. Este curso completo incluye análisis detallados de batallas, cultura, arte y sociedad medieval. Aprenderás sobre la convivencia de las tres culturas, el desarrollo de los reinos cristianos y el proceso de la Reconquista.",
+    purchaseLink: "https://example.com/curso-medieval",
+  },
+  {
+    id: 2,
+    title: "El Imperio Español: Auge y Caída",
+    short_description: "Descubre cómo España dominó el mundo",
+    image: "/spanish-empire-conquistador.jpg",
+    full_description:
+      "Explora el período más glorioso de la historia española. Desde el descubrimiento de América hasta la pérdida de las últimas colonias, este curso analiza las causas del auge imperial, las conquistas, la administración colonial, y los factores que llevaron al declive del imperio más grande de su época.",
+    purchaseLink: "https://example.com/curso-imperio",
+  },
+  {
+    id: 3,
+    title: "E-book: Batallas Decisivas de España",
+    short_description: "Las 20 batallas que cambiaron la historia",
+    image: "/historical-battle-spain.jpg",
+    full_description:
+      "Un e-book ilustrado que recoge las 20 batallas más importantes de la historia española. Cada batalla incluye mapas detallados, análisis táctico, contexto histórico y consecuencias. Desde Covadonga hasta la Guerra Civil, descubre los momentos bélicos que definieron el destino de España.",
+    purchaseLink: "https://example.com/ebook-batallas",
+  },
+  {
+    id: 4,
+    title: "La Guerra Civil Española",
+    short_description: "Análisis profundo del conflicto que dividió España",
+    image: "/spanish-civil-war.jpg",
+    full_description:
+      "Un curso exhaustivo sobre uno de los períodos más complejos y dolorosos de la historia española. Analiza las causas del conflicto, los bandos enfrentados, las batallas principales, la intervención internacional y las consecuencias que marcaron a España durante décadas.",
+    purchaseLink: "https://example.com/curso-guerra-civil",
+  },
+]
+
 const CourseModal = ({ course, onClose }) => {
   if (!course) return null;
 

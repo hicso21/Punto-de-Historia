@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import AboutSection from './components/AboutSection';
 import HistorySection from './components/HistorySection';
 import CoursesSection from './components/CoursesSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import ContactSection from './components/ContactSection';
+import Backoffice from './components/Backoffice';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
+  const [path, setPath] = useState(window.location.pathname);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -25,6 +27,30 @@ function App() {
         return <AboutSection />;
     }
   };
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setPath(window.location.pathname);
+    };
+
+    // Listen for popstate event (browser back/forward)
+    window.addEventListener('popstate', handleLocationChange);
+    
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []);
+
+  // Check if we're on the admin route
+  const isAdminRoute = path === '/admin' || path === '/admin/';
+
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Backoffice />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">

@@ -2,6 +2,45 @@ import { useState, useEffect } from 'react';
 import { Quote, Users } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+const mockTestimonials = [
+  {
+    id: 1,
+    firstName: "Carlos",
+    lastName: "Rodríguez",
+    message: "Los cursos de Punto de Historia han transformado mi comprensión de la historia española. La forma de explicar es clara, entretenida y muy profesional. ¡Totalmente recomendado!",
+  },
+  {
+    id: 2,
+    firstName: "María",
+    lastName: "González",
+    message: "Como profesora de historia, estos recursos me han ayudado enormemente en mis clases. El contenido es riguroso pero accesible, perfecto para estudiantes de todos los niveles.",
+  },
+  {
+    id: 3,
+    firstName: "Javier",
+    lastName: "Martínez",
+    message: "Nunca pensé que la historia pudiera ser tan fascinante. Gracias a Punto de Historia he descubierto una pasión que no sabía que tenía. El e-book de batallas es excepcional.",
+  },
+  {
+    id: 4,
+    firstName: "Ana",
+    lastName: "López",
+    message: "La calidad del contenido es impresionante. Se nota la investigación y el cuidado en cada detalle. He aprendido más aquí que en años de estudio tradicional.",
+  },
+  {
+    id: 5,
+    firstName: "Pedro",
+    lastName: "Sánchez",
+    message: "Excelente trabajo divulgativo. Consigue hacer la historia accesible sin perder rigor académico. Los videos de YouTube son el complemento perfecto para los cursos.",
+  },
+  {
+    id: 6,
+    firstName: "Laura",
+    lastName: "Fernández",
+    message: "Me encanta cómo conecta los eventos históricos con el presente. Da una perspectiva única que no encuentras en otros lugares. ¡Sigue así!",
+  },
+]
+
 const TestimonialsSection = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
