@@ -45,7 +45,6 @@ const HistorySection = () => {
   useEffect(() => {
     const fetch = async () => {
       const { data, error } = await getHistoryCards();
-      console.log(data);
       if (error) return;
       setPeriods(data);
     };

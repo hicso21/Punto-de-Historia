@@ -1,36 +1,39 @@
-import { useEffect, useState } from "react"
-import AboutSection from "../components/AboutSection"
-import { getSiteConfig } from "../lib/request/siteConfig"
+import { useEffect, useState } from "react";
+import AboutSection from "../components/AboutSection";
+import { getSiteConfig } from "../lib/request/siteConfig";
 
 const AboutView = function () {
-    const [config, setConfig] = useState(null)
-    const [loading, setLoading] = useState(true)
+  const [config, setConfig] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetch = async () => {
-            const { data, error } = await getSiteConfig()
+  useEffect(() => {
+    const fetch = async () => {
+      const { data, error } = await getSiteConfig();
 
-            console.log(data);
-            localStorage.setItem('config_site', JSON.stringify(data))
+      localStorage.setItem("config_site", JSON.stringify(data));
 
-            if (!error && data) setConfig(data)
+      if (!error && data) setConfig(data);
 
-            setLoading(false)
-        }
+      setLoading(false);
+    };
 
-        fetch()
-    }, [])
+    fetch();
+  }, []);
 
-    if (loading) return <div className="flex justify-center items-center h-screen">Cargando...</div>
-
-
+  if (loading)
     return (
-        <AboutSection
-            biography_footer={config.biography_footer || ''}
-            biography_paragraph={config.biography_paragraph || ''}
-            biography_src={config.biography_src || ''}
-        />
-    )
-}
+      <div className="flex justify-center items-center h-screen">
+        Cargando...
+      </div>
+    );
 
-export default AboutView
+  return (
+    <AboutSection
+      biography_footer={config.biography_footer || ""}
+      biography_paragraph={config.biography_paragraph || ""}
+      biography_src={config.biography_src || ""}
+    />
+  );
+};
+
+export default AboutView;

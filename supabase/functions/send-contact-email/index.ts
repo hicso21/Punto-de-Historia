@@ -52,12 +52,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    console.log("Contact form submission:", {
-      from: `${firstName} ${lastName}`,
-      email,
-      message: message.substring(0, 50) + "...",
-    });
-
     return new Response(
       JSON.stringify({
         success: true,

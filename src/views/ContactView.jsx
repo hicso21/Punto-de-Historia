@@ -73,7 +73,6 @@ const ContactView = function () {
   useEffect(() => {
     const config_site = localStorage.getItem("config_site");
     setConfigSite(JSON.parse(config_site));
-    console.log(JSON.parse(config_site));
   }, []);
 
   return (

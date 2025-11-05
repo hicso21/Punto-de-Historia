@@ -7,6 +7,7 @@ function Backoffice() {
   const [historyCards, setHistoryCards] = useState([]);
   const [courses, setCourses] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [siteConfig, setSiteConfig] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -52,8 +53,6 @@ function Backoffice() {
         password: password,
       });
 
-      console.log("Login response:", { data, error });
-
       if (error) {
         setLoginError(error.message);
         console.error("Login error:", error);
@@ -66,6 +65,10 @@ function Backoffice() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSeeLandingPage = async () => {
+    window.location.replace(window.location.origin);
   };
 
   const handleLogout = async () => {
@@ -161,7 +164,9 @@ function Backoffice() {
 
         if (!error) fetchHistoryCards();
       } else {
-        const { error } = await supabase.from("history_cards").insert([formData]);
+        const { error } = await supabase
+          .from("history_cards")
+          .insert([formData]);
 
         if (!error) fetchHistoryCards();
       }
@@ -203,7 +208,12 @@ function Backoffice() {
     if (!confirm("¿Estás seguro de eliminar este elemento?")) return;
 
     setLoading(true);
-    const table = activeTab === "history_cards" ? "history_cards" : activeTab === "courses" ? "courses" : "testimonials";
+    const table =
+      activeTab === "history_cards"
+        ? "history_cards"
+        : activeTab === "courses"
+        ? "courses"
+        : "testimonials";
     const { error } = await supabase.from(table).delete().eq("id", id);
 
     if (!error) {
@@ -281,12 +291,20 @@ function Backoffice() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Backoffice</h1>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
-          >
-            Cerrar Sesión
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={handleSeeLandingPage}
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+            >
+              Ver Landing Page
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
 
         <div className="bg-white rounded-lg shadow-md">
