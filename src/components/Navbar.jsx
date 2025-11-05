@@ -17,7 +17,7 @@ const Navbar = ({ activeSection, setActiveSection }) => {
             <img
               src={logo}
               alt="Punto de Historia"
-              className="h-12 w-12 object-contain"
+              className="h-14 w-14 object-contain"
             />
             <span className="text-[#ff5722] text-2xl font-bold">
               Punto de Historia

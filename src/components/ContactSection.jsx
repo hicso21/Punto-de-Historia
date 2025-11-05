@@ -1,67 +1,20 @@
-import { useState } from 'react';
-import { Mail, Send, Youtube, Instagram, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  Mail,
+  Send,
+  Youtube,
+  Instagram,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
 
-const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: '',
-  });
-  const [status, setStatus] = useState({ type: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus({ type: '', message: '' });
-
-    try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
-
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Error al enviar el mensaje');
-      }
-
-      setStatus({
-        type: 'success',
-        message: '¡Mensaje enviado con éxito! Te responderé pronto.',
-      });
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: '',
-      });
-    } catch (error) {
-      setStatus({
-        type: 'error',
-        message: error.message || 'Error al enviar el mensaje. Por favor, intenta de nuevo.',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+const ContactSection = ({
+  formData,
+  status,
+  isSubmitting,
+  handleChange,
+  handleSubmit,
+  configSite,
+}) => {
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,11 +28,13 @@ const ContactSection = () => {
 
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div>
-            <h3 className="text-2xl font-bold text-[#0a1128] mb-6">Sígueme en Redes Sociales</h3>
+            <h3 className="text-2xl font-bold text-[#0a1128] mb-6">
+              Sígueme en Redes Sociales
+            </h3>
 
             <div className="space-y-4 mb-8">
               <a
-                href="https://youtube.com"
+                href={configSite?.youtube_owner}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-[#ff5722]"
@@ -94,7 +49,7 @@ const ContactSection = () => {
               </a>
 
               <a
-                href="https://instagram.com"
+                href={configSite?.instagram_owner}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:border-[#ff5722]"
@@ -111,33 +66,39 @@ const ContactSection = () => {
 
             <div className="bg-gradient-to-br from-[#0a1128] to-[#1a2744] rounded-xl p-6 text-white">
               <Mail className="w-12 h-12 mb-4 text-[#ff5722]" />
-              <h4 className="text-xl font-bold mb-2">¿Prefieres escribir un email directo?</h4>
+              <h4 className="text-xl font-bold mb-2">
+                ¿Prefieres escribir un email directo?
+              </h4>
               <p className="text-gray-300">
-                También puedes contactarme directamente a través del formulario de contacto.
-                Respondo todos los mensajes personalmente.
+                También puedes contactarme directamente a través del formulario
+                de contacto. Respondo todos los mensajes personalmente.
               </p>
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-            <h3 className="text-2xl font-bold text-[#0a1128] mb-6">Envíame un Mensaje</h3>
+            <h3 className="text-2xl font-bold text-[#0a1128] mb-6">
+              Envíame un Mensaje
+            </h3>
 
-            {status.message && (
+            {status?.message && (
               <div
                 className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
-                  status.type === 'success'
-                    ? 'bg-green-50 border border-green-200'
-                    : 'bg-red-50 border border-red-200'
+                  status.type === "success"
+                    ? "bg-green-50 border border-green-200"
+                    : "bg-red-50 border border-red-200"
                 }`}
               >
-                {status.type === 'success' ? (
+                {status.type === "success" ? (
                   <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                 ) : (
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                 )}
                 <p
                   className={`text-sm ${
-                    status.type === 'success' ? 'text-green-800' : 'text-red-800'
+                    status.type === "success"
+                      ? "text-green-800"
+                      : "text-red-800"
                   }`}
                 >
                   {status.message}
@@ -148,14 +109,17 @@ const ContactSection = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Nombre *
                   </label>
                   <input
                     type="text"
                     id="firstName"
                     name="firstName"
-                    value={formData.firstName}
+                    value={formData?.firstName}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all"
@@ -164,14 +128,17 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Apellido *
                   </label>
                   <input
                     type="text"
                     id="lastName"
                     name="lastName"
-                    value={formData.lastName}
+                    value={formData?.lastName}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all"
@@ -181,14 +148,17 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Email *
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
+                  value={formData?.email}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff5722] focus:border-transparent transition-all"
@@ -197,13 +167,16 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Mensaje *
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  value={formData.message}
+                  value={formData?.message}
                   onChange={handleChange}
                   required
                   rows={6}

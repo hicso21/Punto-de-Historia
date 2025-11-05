@@ -1,28 +1,29 @@
-import { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
-import AboutSection from './components/AboutSection';
-import HistorySection from './components/HistorySection';
-import CoursesSection from './components/CoursesSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import ContactSection from './components/ContactSection';
-import Backoffice from './components/Backoffice';
+import { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
+import AboutSection from "./components/AboutSection";
+import HistorySection from "./components/HistorySection";
+import CoursesSection from "./components/CoursesSection";
+import TestimonialsSection from "./components/TestimonialsSection";
+import ContactView from "./views/ContactView";
+import Backoffice from "./components/Backoffice";
+import AboutView from "./views/AboutView";
 
 function App() {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState("about");
   const [path, setPath] = useState(window.location.pathname);
 
   const renderSection = () => {
     switch (activeSection) {
-      case 'about':
-        return <AboutSection />;
-      case 'history':
+      case "about":
+        return <AboutView />;
+      case "history":
         return <HistorySection />;
-      case 'courses':
+      case "courses":
         return <CoursesSection />;
-      case 'testimonials':
+      case "testimonials":
         return <TestimonialsSection />;
-      case 'contact':
-        return <ContactSection />;
+      case "contact":
+        return <ContactView />;
       default:
         return <AboutSection />;
     }
@@ -34,15 +35,15 @@ function App() {
     };
 
     // Listen for popstate event (browser back/forward)
-    window.addEventListener('popstate', handleLocationChange);
-    
+    window.addEventListener("popstate", handleLocationChange);
+
     return () => {
-      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener("popstate", handleLocationChange);
     };
   }, []);
 
   // Check if we're on the admin route
-  const isAdminRoute = path === '/admin' || path === '/admin/';
+  const isAdminRoute = path === "/admin" || path === "/admin/";
 
   if (isAdminRoute) {
     return (
@@ -54,12 +55,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
+      <Navbar
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
       <main>{renderSection()}</main>
       <footer className="bg-[#0a1128] text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-400">
-            &copy; {new Date().getFullYear()} Punto de Historia. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} Punto de Historia. Todos los
+            derechos reservados.
           </p>
         </div>
       </footer>

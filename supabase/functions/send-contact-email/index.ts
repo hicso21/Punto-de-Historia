@@ -14,9 +14,10 @@ interface ContactFormData {
 }
 
 Deno.serve(async (req: Request) => {
+  // Handle CORS preflight request
   if (req.method === "OPTIONS") {
     return new Response(null, {
-      status: 200,
+      status: 204,
       headers: corsHeaders,
     });
   }
