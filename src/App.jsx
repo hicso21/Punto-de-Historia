@@ -54,13 +54,13 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="flex flex-col justify-between min-h-screen bg-white">
       <Navbar
         activeSection={activeSection}
         setActiveSection={setActiveSection}
       />
       <main>{renderSection()}</main>
-      <footer className="bg-[#0a1128] text-white py-8">
+      <footer className="bg-[#0a1128] text-white py-8 lg:h-[88px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-400">
             &copy; {new Date().getFullYear()} Punto de Historia. Todos los
