@@ -14,13 +14,18 @@ export const sendContactEmail = async ({
         lastName,
         email,
         message,
+        // Asegúrate de usar un email con tu dominio verificado
+        from: email, // o el email que hayas configurado
+        to: "hicso.dev@gmail.com", // el email donde quieres recibir los mensajes
       },
     });
+
     // Si hay un error, lanza una excepción
     if (error) {
       throw new Error(error.message || "Error al enviar el mensaje");
     }
-    // Retorna los datos de éxito (puedes personalizar esto según lo que devuelva tu función)
+
+    // Retorna los datos de éxito
     return data;
   } catch (err) {
     // Maneja errores y lanza una excepción para que el componente la capture
