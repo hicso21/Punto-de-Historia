@@ -1,4 +1,5 @@
 import { supabase } from "../supabase";
+import { getSiteConfig } from "./siteConfig";
 
 export const sendContactEmail = async ({
   firstName,
@@ -7,6 +8,8 @@ export const sendContactEmail = async ({
   message,
 }) => {
   try {
+    const { data: siteData, error: siteError } = await getSiteConfig();
+
     // Invoca la Edge Function con el body que contiene los datos del formulario
     const { data, error } = await supabase.functions.invoke("resend-email", {
       body: {
@@ -16,7 +19,9 @@ export const sendContactEmail = async ({
         message,
         // Asegúrate de usar un email con tu dominio verificado
         from: email, // o el email que hayas configurado
-        to: "hicso.dev@gmail.com", // el email donde quieres recibir los mensajes
+        to: siteData.email_owner
+          ? siteData.email_owner
+          : "puntodehistoria@gmail.com", // el email donde quieres recibir los mensajes
       },
     });
 
