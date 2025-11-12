@@ -20,11 +20,11 @@ export const getSiteConfig = async () => {
 /**
  * Actualizar la configuración del sitio
  */
-export const updateSiteConfig = async (updates) => {
+export const updateSiteConfig = async (updates, id) => {
   // Primero obtenemos el registro actual
-  const { data: currentConfig, error: fetchError } = await getSiteConfig();
+  const { data: current, error: fetchError } = await getSiteConfig();
 
-  if (fetchError || !currentConfig) {
+  if (fetchError || !current) {
     console.error("No site config found to update");
     return { data: null, error: fetchError };
   }
@@ -32,7 +32,7 @@ export const updateSiteConfig = async (updates) => {
   const { data, error } = await supabase
     .from("site_config")
     .update(updates)
-    .eq("id", currentConfig.id)
+    .eq("id", id || current.id)
     .select()
     .single();
 

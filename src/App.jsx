@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
 import AboutSection from "./components/AboutSection";
-import HistorySection from "./components/HistorySection";
-import CoursesSection from "./components/CoursesSection";
-import TestimonialsSection from "./components/TestimonialsSection";
-import ContactView from "./views/ContactView";
-import Backoffice from "./components/Backoffice";
+import Navbar from "./components/Navbar";
 import AboutView from "./views/AboutView";
+import BackofficeView from "./views/BackofficeView";
+import ContactView from "./views/ContactView";
+import CoursesView from "./views/CoursesView";
+import HistoryView from "./views/HistoryView";
+import TestimonialsView from "./views/TestimonialsView";
 
 function App() {
   const [activeSection, setActiveSection] = useState("about");
@@ -17,11 +17,11 @@ function App() {
       case "about":
         return <AboutView />;
       case "history":
-        return <HistorySection />;
+        return <HistoryView />;
       case "courses":
-        return <CoursesSection />;
+        return <CoursesView />;
       case "testimonials":
-        return <TestimonialsSection />;
+        return <TestimonialsView />;
       case "contact":
         return <ContactView />;
       default:
@@ -48,7 +48,7 @@ function App() {
   if (isAdminRoute) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Backoffice />
+        <BackofficeView />
       </div>
     );
   }

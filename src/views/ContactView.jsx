@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import AboutSection from "../components/AboutSection";
-import { getSiteConfig } from "../lib/request/siteConfig";
-import { CloudCog } from "lucide-react";
 import ContactSection from "../components/ContactSection";
+import { sendContactEmail } from "../lib/api/contact";
 
 const ContactView = function () {
   const [formData, setFormData] = useState({
@@ -29,24 +27,7 @@ const ContactView = function () {
     setStatus({ type: "", message: "" });
 
     try {
-      const apiUrl = `${
-        import.meta.env.VITE_SUPABASE_URL
-      }/functions/v1/send-contact-email`;
-
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Error al enviar el mensaje");
-      }
+      await sendContactEmail(formData);
 
       setStatus({
         type: "success",

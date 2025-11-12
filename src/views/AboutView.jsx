@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AboutSection from "../components/AboutSection";
-import { getSiteConfig } from "../lib/request/siteConfig";
+import { getSiteConfig } from "../lib/api/siteConfig";
+import LoadingSection from "../components/LoadingSection";
 
 const AboutView = function () {
   const [config, setConfig] = useState(null);
@@ -20,12 +21,7 @@ const AboutView = function () {
     fetch();
   }, []);
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Cargando...
-      </div>
-    );
+  if (loading) return <LoadingSection />;
 
   return (
     <AboutSection
