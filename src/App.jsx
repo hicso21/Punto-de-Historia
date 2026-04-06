@@ -9,7 +9,7 @@ import HistoryView from "./views/HistoryView";
 import TestimonialsView from "./views/TestimonialsView";
 
 function App() {
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("");
   const [path, setPath] = useState(window.location.pathname);
 
   const renderSection = () => {
@@ -25,7 +25,7 @@ function App() {
       case "contact":
         return <ContactView />;
       default:
-        return <AboutSection />;
+        return <ContactView />;
     }
   };
 
